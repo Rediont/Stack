@@ -1,5 +1,7 @@
+#define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "iostream"
 #include "doctest.h"
+#include <math.h>
 
 using namespace std;
 
@@ -11,15 +13,12 @@ private:
 	int stack_size = 0;
 	int top_index = -1;
 	int* stack_container = new int[stack_size];
-
 public:
 	StackOnArray();
 	StackOnArray(int size);
 
 	void Push(int a);
 	int Pop();
-	int Top_Element();
-	int Size_Of_Stack();
 
     bool IsEmpty()
     {
@@ -42,7 +41,7 @@ StackOnArray::StackOnArray() {
 void StackOnArray::Push(int a) {
 	if (top_index<(stack_size-1))
 	{
-		top_index + 1;
+		top_index ++;
 		stack_container[top_index] = a;
 	}
 	else
@@ -56,25 +55,11 @@ int StackOnArray::Pop() {
 	if (top_index != -1)
 	{
 		result = stack_container[top_index];
-		cout << result << " is deleted from stack";
-		top_index--;
-	}
-	else
-	{
-		cout << "StackOnArray is empty";
+		top_index = top_index - 1;
 	}
     return result;
 }
 
-int StackOnArray::Top_Element() {
-	cout << "Top element of stack = ";
-	return stack_container[top_index];
-}
-
-int StackOnArray::Size_Of_Stack() {
-	cout << "Size of stack = ";
-	return (top_index + 1);
-}
 
 //тести для звичайного стеку
 
@@ -99,24 +84,15 @@ TEST_CASE("testing Stack on array 2") {
     CHECK(stack.IsEmpty() == true);
 }
 
-TEST_CASE("testing stack 2") {
-    StackOnArray stack;
-    stack.Push(1);
-    CHECK(stack.Top_Element() == 1);
-    stack.Push(2);
-    CHECK(stack.Top_Element() == 2);
-    stack.Push(3);
-    CHECK(stack.Top_Element() == 3);
+TEST_CASE("testing Stack on array 3") {
+    StackOnArray stack(6);
+    stack.Push(31);
+    stack.Push(22);
     stack.Pop();
     stack.Pop();
-    CHECK(stack.Top_Element() == 1);
+    stack.Pop();
+    int read_value = stack.Pop();
+    CHECK(read_value == 0);
 }
 
-int main() 
-{
 
-
-
-	system("pause");
-	return 0;
-}
